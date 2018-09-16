@@ -1,0 +1,66 @@
+﻿{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "**Hello World**"
+    },
+    {
+      "type": "TextBlock",
+      "text": "sample text goes here"
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "ActionSet",
+                  "actions": [
+                    {
+                      "type": "Action.ShowCard",
+                      "title": "Add a comment",
+                      "card": {
+                        "type": "AdaptiveCard",
+                        "body": [
+                          {
+                            "type": "Input.Text",
+                            "isMultiline": true
+                          },
+                          {
+                            "type": "ActionSet",
+                            "spacing": "small",
+                            "actions": [
+                              {
+                                "type": "Action.OpenUrl",
+                                "title": "OK",
+                                "url": "https://www.microsoft.com"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Action.OpenUrl",
+                      "title": "Visit Microsoft",
+                      "url": "https://www.microsoft.com"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+			
