@@ -1,0 +1,14 @@
+﻿{
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "**Hello World**"
+    },
+    {
+      "type": "TextBlock",
+      "text": "sample text goes here"
+    }
+  ]
+}

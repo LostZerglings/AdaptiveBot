@@ -1,7 +1,9 @@
 ﻿namespace SampleAdaptiveCard.Dialogs
 {
     using System;
+    using System.IO;
     using System.Threading.Tasks;
+    using System.Web.Hosting;
     using AdaptiveCards;
     using Microsoft.Bot.Builder.Dialogs;
     using Microsoft.Bot.Connector;
@@ -95,7 +97,40 @@
 
         private async Task CreateAdapteiveCardFromJson(IDialogContext context, string text)
         {
-            await context.PostAsync("I'm sorry this code hasn't been added yet... Please check back later.");
+            try
+            {
+                //This is the path to our card in the solution. if you had it in another folder you would map to that path ie ~\\Dialogs\\Cards\\SampleCard.json
+                var path = HostingEnvironment.MapPath($"~\\Dialogs\\SampleCard.json");
+
+                //verify the card exists
+                if (!File.Exists(path))
+                    await context.PostAsync("I'm sorry, a card at this path does not exist.");
+
+                //open the file
+                using (var file = File.OpenText(path))
+                {
+                    //convert the json to an adaptive card
+                    var results = AdaptiveCard.FromJson(await file.ReadToEndAsync());
+                    var card = results.Card;
+
+                    //create a message to respond with and attach the adaptive card as an attachment
+                    var message = context.MakeMessage();
+                    message.Attachments.Add(new Attachment()
+                    {
+                        Content = card,
+                        ContentType = AdaptiveCard.ContentType,
+                        Name = "Card"
+                    });
+
+                    //post card
+                    await context.PostAsync(message);
+
+                }
+            }
+            catch (Exception error)
+            {
+                await context.PostAsync(error.ToString());
+            }
         }
     }
 }
